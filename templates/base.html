@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docs CMS</title>
+
+    <!-- GitHub Dark Markdown -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown-dark.css">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #161b22;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #30363d;
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px;
+            color: #c9d1d9;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar a:hover {
+            background: #21262d;
+        }
+
+        .active {
+            background: #238636;
+            color: white !important;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .markdown-body {
+            background: transparent;
+        }
+
+        button {
+            background: #238636;
+            border: none;
+            padding: 8px 14px;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button.delete {
+            background: #da3633;
+        }
+
+        textarea {
+            width: 100%;
+            background: #0d1117;
+            color: white;
+            border: 1px solid #30363d;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: white;
+            border-radius: 6px;
+        }
+
+        hr {
+            border-color: #30363d;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>📘 Docs</h2>
+
+    <a href="/">Dashboard</a>
+
+    {% for file in files %}
+        <a href="/page/{{file}}"
+           class="{% if current_page == file %}active{% endif %}">
+           {{file}}
+        </a>
+    {% endfor %}
+
+    <hr>
+
+    <form action="/create" method="POST">
+        <input type="text" name="name" placeholder="newpage">
+        <br><br>
+        <button type="submit">➕ Create Page</button>
+    </form>
+</div>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
